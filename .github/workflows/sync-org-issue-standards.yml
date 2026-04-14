@@ -1,0 +1,33 @@
+name: Sync org issue standards
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 5 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate token availability
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.SMARTDEV_ORG_ADMIN_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "Missing SMARTDEV_ORG_ADMIN_TOKEN secret" >&2
+            exit 1
+          fi
+
+      - name: Sync issue standards across the organization
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.SMARTDEV_ORG_ADMIN_TOKEN }}
+          ORG_NAME: smartdev-git
+        run: ./scripts/sync-org-issue-standards.ps1 -Org $env:ORG_NAME
