@@ -19,3 +19,11 @@ Project URL: https://github.com/orgs/smartdev-git/projects/1
 - `needs-triage`
 - `blocked`
 - `duplicate`
+
+## Future repositories and repo renames
+
+The shared issue form already applies automatically to future repositories unless they define their own local templates.
+
+To keep labels and `has_issues=true` aligned for newly created repositories or renamed repositories, this repo includes the workflow `Sync org issue standards`.
+
+To enable that workflow, add the repository secret `SMARTDEV_ORG_ADMIN_TOKEN` in `smartdev-git/.github` with a token that can manage private repositories in `smartdev-git`.
