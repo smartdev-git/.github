@@ -13,6 +13,16 @@ Issues created from the shared bug form will:
 
 Project URL: https://github.com/orgs/smartdev-git/projects/1
 
+## Team backlog
+
+General team backlog tasks do not go here.
+
+Use the private backlog repository instead:
+- https://github.com/smartdev-git/team-backlog
+
+Those tasks feed the `Smartdev Team Backlog` project:
+- https://github.com/orgs/smartdev-git/projects/2
+
 ## Base labels
 
 - `bug`
