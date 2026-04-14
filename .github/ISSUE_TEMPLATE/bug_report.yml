@@ -1,0 +1,126 @@
+name: Bug report
+description: Registra un bug interno para seguimiento y priorizacion.
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+projects: ["smartdev-git/1"]
+type: bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Usa este formulario para registrar bugs internos y dejar suficiente contexto para triage.
+
+  - type: input
+    id: summary
+    attributes:
+      label: Resumen
+      description: Una frase corta que describa el problema.
+      placeholder: Transferencia interbancaria falla al confirmar
+    validations:
+      required: true
+
+  - type: input
+    id: affected-service
+    attributes:
+      label: Repositorio o servicio afectado
+      description: Indica el repo, modulo o servicio donde se observa el bug.
+      placeholder: smartdev-git/core-bancario-app
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Ambiente
+      description: Donde ocurre el problema.
+      options:
+        - Production
+        - QA/UAT
+        - Development
+        - Unknown
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severidad
+      description: Impacto esperado del bug.
+      options:
+        - S1 Critical
+        - S2 High
+        - S3 Medium
+        - S4 Low
+    validations:
+      required: true
+
+  - type: dropdown
+    id: source
+    attributes:
+      label: Source
+      description: Quien detecto el bug.
+      options:
+        - QA
+        - Internal
+        - Client
+        - Monitoring
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-behavior
+    attributes:
+      label: Comportamiento actual
+      description: Que paso realmente.
+      placeholder: El sistema responde con error 500 al confirmar la transferencia.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Comportamiento esperado
+      description: Que debia ocurrir.
+      placeholder: La transferencia debia confirmarse y generar el comprobante.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Pasos para reproducir
+      description: Lista pasos concretos, datos de prueba y precondiciones.
+      placeholder: |
+        1. Ingresar con usuario QA.
+        2. Ir a Transferencias > Interbancarias.
+        3. Registrar una transferencia valida.
+        4. Confirmar la operacion.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidencia o logs
+      description: Pega logs, stack traces, payloads o enlaces relevantes.
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: workaround
+    attributes:
+      label: Workaround
+      description: Indica si existe una forma temporal de evitar el problema.
+      placeholder: Reintentar desde la sucursal secundaria evita el error.
+    validations:
+      required: false
+
+  - type: input
+    id: detected-version
+    attributes:
+      label: Version o build detectada
+      description: Version, branch, commit o build donde se detecto.
+      placeholder: desktop-main 1.4.7 / build 2026.04.14.1
+    validations:
+      required: false
