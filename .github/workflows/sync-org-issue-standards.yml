@@ -2,11 +2,25 @@ name: Sync org issue standards
 
 on:
   workflow_dispatch:
+    inputs:
+      org:
+        description: Organization to sync
+        required: false
+        default: smartdev-git
+      dry_run:
+        description: Preview changes without applying them
+        required: false
+        default: false
+        type: boolean
   schedule:
     - cron: '17 5 * * *'
 
 permissions:
   contents: read
+
+concurrency:
+  group: sync-org-issue-standards
+  cancel-in-progress: false
 
 jobs:
   sync:
@@ -29,5 +43,12 @@ jobs:
         shell: pwsh
         env:
           GH_TOKEN: ${{ secrets.SMARTDEV_ORG_ADMIN_TOKEN }}
-          ORG_NAME: smartdev-git
-        run: ./scripts/sync-org-issue-standards.ps1 -Org $env:ORG_NAME
+          ORG_NAME: ${{ github.event.inputs.org || 'smartdev-git' }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: |
+          if ($env:DRY_RUN -eq 'true') {
+            ./scripts/sync-org-issue-standards.ps1 -Org $env:ORG_NAME -DryRun
+          }
+          else {
+            ./scripts/sync-org-issue-standards.ps1 -Org $env:ORG_NAME
+          }
