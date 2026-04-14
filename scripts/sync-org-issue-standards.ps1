@@ -1,6 +1,7 @@
 param(
   [Parameter(Mandatory = $true)]
-  [string]$Org
+  [string]$Org,
+  [switch]$DryRun
 )
 
 $ErrorActionPreference = 'Stop'
@@ -22,9 +23,21 @@ foreach ($repo in $repos) {
   $repoFullName = "$Org/$($repo.name)"
   Write-Host "Syncing $repoFullName"
 
-  gh api -X PATCH "repos/$repoFullName" -f has_issues=true | Out-Null
+  if ($DryRun) {
+    if ($repo.has_issues -ne $true) {
+      Write-Host "[dry-run] would enable Issues on $repoFullName"
+    }
+  }
+  elseif ($repo.has_issues -ne $true) {
+    gh api -X PATCH "repos/$repoFullName" -f has_issues=true | Out-Null
+  }
 
   foreach ($label in $labels) {
+    if ($DryRun) {
+      Write-Host "[dry-run] would upsert label '$($label.Name)' on $repoFullName"
+      continue
+    }
+
     gh label create $label.Name --repo $repoFullName --color $label.Color --description $label.Description --force | Out-Null
   }
 }
