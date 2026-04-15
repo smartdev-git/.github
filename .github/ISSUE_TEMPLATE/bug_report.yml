@@ -10,12 +10,14 @@ body:
       value: |
         Usa este formulario para registrar bugs internos y dejar suficiente contexto para triage.
 
-  - type: input
+  - type: textarea
     id: summary
     attributes:
       label: Resumen
-      description: Una frase corta que describa el problema.
-      placeholder: Transferencia interbancaria falla al confirmar
+      description: Describe el problema con un poco mas de contexto.
+      placeholder: |
+        La transferencia interbancaria falla al confirmar.
+        El error ocurre despues de validar los datos y antes de generar el comprobante.
     validations:
       required: true
 
