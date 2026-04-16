@@ -25,17 +25,30 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    env:
+      ORG_NAME: ${{ github.event.inputs.org || 'smartdev-git' }}
+      DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validate token availability
+      - name: Validate admin token
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.SMARTDEV_ORG_ADMIN_TOKEN }}
         run: |
           if [ -z "$GH_TOKEN" ]; then
-            echo "Missing SMARTDEV_ORG_ADMIN_TOKEN secret" >&2
+            echo "::error title=Missing SMARTDEV_ORG_ADMIN_TOKEN::Add this Actions secret in smartdev-git/.github or as an organization secret shared with this repository." >&2
+            exit 1
+          fi
+
+          if ! gh auth status >/dev/null 2>&1; then
+            echo "::error title=Invalid SMARTDEV_ORG_ADMIN_TOKEN::GitHub CLI could not authenticate with the configured token." >&2
+            exit 1
+          fi
+
+          if ! gh api "orgs/$ORG_NAME/repos?type=all&per_page=1" >/dev/null 2>&1; then
+            echo "::error title=Insufficient token access::The configured token cannot enumerate repositories for $ORG_NAME. Verify repo/read:org scopes and any required SSO authorization." >&2
             exit 1
           fi
 
@@ -43,8 +56,6 @@ jobs:
         shell: pwsh
         env:
           GH_TOKEN: ${{ secrets.SMARTDEV_ORG_ADMIN_TOKEN }}
-          ORG_NAME: ${{ github.event.inputs.org || 'smartdev-git' }}
-          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
         run: |
           if ($env:DRY_RUN -eq 'true') {
             ./scripts/sync-org-issue-standards.ps1 -Org $env:ORG_NAME -DryRun
