@@ -1,11 +1,1 @@
 blank_issues_enabled: false
-contact_links:
-  - name: Reportar bug en team-backlog
-    url: https://github.com/smartdev-git/team-backlog/issues/new?template=bug.yml
-    about: Registra bugs internos y operativos en el backlog central del equipo.
-  - name: Crear task en team-backlog
-    url: https://github.com/smartdev-git/team-backlog/issues/new?template=task.yml
-    about: Registra tareas tecnicas, operativas o de seguimiento en el backlog central.
-  - name: Proponer feature en team-backlog
-    url: https://github.com/smartdev-git/team-backlog/issues/new?template=feature.yml
-    about: Registra iniciativas funcionales o mejoras de producto en el backlog central.
