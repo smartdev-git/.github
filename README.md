@@ -2,26 +2,22 @@
 
 This repository centralizes the default community health files for `smartdev-git`.
 
-## Bug reporting
+## Backlog intake
 
-Use the `Bug report` form from any repository that does not define its own local templates.
-
-Issues created from the shared bug form will:
-- use the `bug` issue type
-- apply the `bug` and `needs-triage` labels
-- be added to the `Smartdev Bug Triage` project
-
-Project URL: https://github.com/orgs/smartdev-git/projects/1
-
-## Team backlog
-
-General team backlog tasks do not go here.
+Operational work items no longer live in this repository.
 
 Use the private backlog repository instead:
 - https://github.com/smartdev-git/team-backlog
 
-Those tasks feed the `Smartdev Team Backlog` project:
+That repository is now the single intake point for:
+- bugs
+- tasks
+- features
+
+Those items feed the `Smartdev Team Backlog` project:
 - https://github.com/orgs/smartdev-git/projects/2
+
+This repository only keeps the shared standards and redirects the issue chooser to `team-backlog`.
 
 ## Base labels
 
@@ -32,9 +28,7 @@ Those tasks feed the `Smartdev Team Backlog` project:
 
 ## Future repositories and repo renames
 
-The shared issue form already applies automatically to future repositories unless they define their own local templates.
-
-To keep labels and `has_issues=true` aligned for newly created repositories or renamed repositories, this repo includes the workflow `Sync org issue standards`.
+To keep base labels and `has_issues=true` aligned for newly created repositories or renamed repositories, this repo includes the workflow `Sync org issue standards`.
 
 ## Required secret
 
